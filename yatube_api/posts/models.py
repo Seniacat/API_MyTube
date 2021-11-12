@@ -29,7 +29,7 @@ class Post(models.Model):
     )
 
     def __str__(self):
-        return self.text
+        return self.text[:20]
 
 
 class Comment(models.Model):
@@ -42,7 +42,7 @@ class Comment(models.Model):
         'Дата добавления', auto_now_add=True, db_index=True)
 
     def __str__(self):
-        return self.text
+        return self.text[:20]
 
 
 class Follow(models.Model):
@@ -58,12 +58,12 @@ class Follow(models.Model):
     )
 
     class Meta:
-        constraints = [
+        constraints = (
             models.UniqueConstraint(
-                fields=['user', 'following'],
+                fields=('user', 'following'),
                 name='unique_following'
-            )
-        ]
+            ),
+        )
 
     def __str__(self):
         return f'{self.user} follows {self.following}'
